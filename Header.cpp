@@ -1,55 +1,60 @@
-#include <iostream>
 #include "Header.h"
-void Increase() {
-	int b, j;
-	std::cout << "Enter array size ";
-	int size;
-	std::cin >> size;
-	int *arr = new int[size];
-	std::cout << " Enter array ";
-	for (int i = 0; i < size; i++)
-	{
-		std::cin >> arr[i];
-	}
-	for (int i = 1; i < size; i++) {
-		b = arr[i];
-		j = i;
-		while (j > 0 && arr[j - 1] > b)
-		{
-			arr[j] = arr[j - 1];
-			j = j - 1;
-		}
-		arr[j] = b;
-	}
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << arr[i] << " ";
-	}
-};
+#include <iostream>
 
-void descending() {
+void Increase(int s, int mas[]) {
 	int b, j;
-	std::cout << "Enter array size ";
-	int size;
-	std::cin >> size;
-	int *arr = new int[size];
-	std::cout << " Enter array ";
-	for (int i = 0; i < size; i++)
-	{
-		std::cin >> arr[i];
-	}
-	for (int i = 1; i < size; i++) {
-		b = arr[i];
+	for (int i = 1; i < s; i++) {
+		b = mas[i];
 		j = i;
-		while (j > 0 && arr[j - 1] < b)
+		while (j > 0 && mas[j - 1] > b)
 		{
-			arr[j] = arr[j - 1];
+			mas[j] = mas[j - 1];
 			j = j - 1;
 		}
-		arr[j] = b;
+		mas[j] = b;
 	}
-	for (int i = 0; i < size; i++)
+	void descending(int s, int mas[]) {
+		int b, j;
+		for (int i = 1; i < s; i++) {
+			b = mas[i];
+			j = i;
+			while (j > 0 && mas[j - 1] < b)
+			{
+				mas[j] = mas[j - 1];
+				j = j - 1;
+			}
+			mas[j] = b;
+		}
+	}
+
+	void reverse(int s, int mas[]) {
+		int swap;
+		for (int i = 0; i < s / 2; i++)
+		{
+			swap = mas[i];
+			mas[i] = mas[s - i - 1];
+			mas[s - 1 - i] = swap;
+		}
+
+	}
+
+	int sum(int s, int mas[])
 	{
-		std::cout << arr[i] << " ";
+
+		int summa = 0;
+		for (int i = 0; i < s; i++)
+		{
+			summa += mas[i];
+		}
+		return summa;
 	}
-}
+
+	void(*Function(int s, int mas[]))(int, int[])
+	{
+		void(*minFunction)(int, int[]);
+		int summa = sum(s, mas);
+		if (summa == mas[0]) minFunction = reverse;
+		if (summa > mas[0]) minFunction = descending;
+		else minFunction = Increase;
+		return minFunction;
+	}
